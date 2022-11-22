@@ -1,11 +1,32 @@
+import { Start } from '@mui/icons-material';
 import { renderBlock } from './lib.js'
+ 
 
-export function renderSearchFormBlock (arrivalDate: Date | null, departureDate: Date | null){
-const currentDate: Date= new Date();
-const maximumDate: Date= new Date(currentDate.getFullYear(), currentDate.getMonth() + 2, 0)
-const selectedTheDate = (d: Date, month: number, day: number) => {
-  return `${d.getFullYear()}-${("00" + (d.getMonth() + month + 1)).slice(-2)}-${("00" + (d.getDate() + day)).slice(-2)}`
+function inData (start:Date, end: Date) {
+  const currentDate: Date= new Date(start);
+  const maximumDate = new Date(end);
+  const oneDay = 1000 * 60 * 60 * 24
+  const inDataTime = maximumDate.getTime() - currentDate.getTime()
+  const inDataDays = Math.round(inDataTime/oneDay)
+  return inDataDays
 }
+ 
+  
+  interface SearchFormData{
+    arrivalDate: Date, 
+    departureDate: Date,
+     handler:(arrivalDate, departureDate) => void | null
+  }
+   
+  export function renderSearchFormBlock (arrivalDate: SearchFormData, departureDate: SearchFormData){
+  
+    if (arrivalDate === departureDate) {
+      alert('неправильно выбрана дата')
+    } else {
+      return inData(arrivalDate, departureDate)
+    }
+
+
 
 
   renderBlock(
@@ -28,18 +49,18 @@ const selectedTheDate = (d: Date, month: number, day: number) => {
           <div>
             <label for="check-in-date">Дата заезда</label>
             <input id="check-in-date" type="date" 
-            value="${arrivalDate instanceof Date ? selectedTheDate(arrivalDate, 0, 0) : selectedTheDate(currentDate, 0, 1)}" 
-            min="${selectedTheDate(currentDate, 0, 0)}" 
-            max="${selectedTheDate(maximumDate, 0, 0)}" 
+            value="${arrivalDate}" 
+            min="${Start}" 
+            max="${inData}"  
             name="checkin" />
           </div>
           <div>
             <label for="check-out-date">Дата выезда</label>
             <input id="check-out-date" 
             type="date" 
-            value="${departureDate instanceof Date ? selectedTheDate(departureDate, 0, 0) : selectedTheDate(currentDate, 0, 3)}" 
-            min="${selectedTheDate(currentDate, 0, 2)}" 
-            max="${selectedTheDate(maximumDate, 0, 0)}" 
+            value="${departureDate}" 
+            min="${Start}" 
+            max="${inData}" 
             name="checkout"/>
           </div>
           <div>

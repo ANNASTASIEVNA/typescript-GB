@@ -5,11 +5,11 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc src/index.ts --outDir dist --target es2015",
-    "start": "node .",
+    "start": "http-server -p 3000",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint-fix": "eslint src --ext .js --ext .ts --fix",
-    "lint": "eslint src --ext .js --ext .ts",
-    "server":"http-server -p 3001"
+    "lint": "eslint src --ext .js --ext .ts"
+   
   },
   "author": "",
   "license": "ISC",
