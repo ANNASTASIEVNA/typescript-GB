@@ -1,4 +1,5 @@
 import { renderBlock } from './lib.js'
+import { ISearchFormData } from './interfaces.js';
 
 export function renderSearchFormBlock (arrivalDate: Date | null, departureDate: Date | null){
 const currentDate: Date= new Date();
@@ -53,5 +54,30 @@ const selectedTheDate = (d: Date, month: number, day: number) => {
       </fieldset>
     </form>
     `
-  )
-}
+    )
+    document.querySelector('form#searchForm').addEventListener('submit', getSearchFormData)
+  }
+  
+  function getSearchFormData(e: Event): void { 
+    e.preventDefault();
+  
+    const form = new FormData(document.querySelector('form#searchForm'))
+  
+    const formValues = {
+      city: '',
+      coordinates: [],
+      checkInDate: '',
+      checkOutDate: '',
+      maxPrice: ''
+    }
+  
+  
+    const searchFormData: any = {
+      'city': ' ',
+      'coordinates': [],
+      'check-in-date': Date,
+      'check-out-date': Date,
+      'max-price': '',
+    }
+  
+  }
